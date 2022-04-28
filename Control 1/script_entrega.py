@@ -58,3 +58,44 @@ print(f"la tasa de fuga de los contratos que iniciaron el 2022 es de {cantidad_f
 
 
 ############################################ 2 ####################################################################################################################################
+inicio_2021 = data[data.PERIODO.apply(str).str.contains("2021")]
+inicio_2022 = data[data.PERIODO.apply(str).str.contains("2022")]
+
+# A)
+P2_a = pd.merge(inicio_2021, inicio_2022, left_on = "RUT", right_on = "RUT")["RUT"].size
+print(f"La cantidad de personas que contrataron el seguro el 2021 y el 2022 son: {P2_a}")
+
+
+#B)
+P2_b = pd.merge(inicio_2022, inicio_2021, on = "RUT")["RUT"].size
+print(f"La cantidad de personas que contrataron el seguro el 2022 y el 2021 son: {P2_b}")
+
+
+# C)
+
+print(inicio_2021)
+print(inicio_2022)
+
+interseccion = pd.merge(inicio_2022,inicio_2021, how = "inner", on = "RUT")["RUT"]
+
+inicio_2022_rut = inicio_2022["RUT"]
+
+print(interseccion)
+
+#P2_C = pd.merge(inicio_2022_rut, interseccion, how = "inner",on= "RUT")
+#print(P2_C)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
