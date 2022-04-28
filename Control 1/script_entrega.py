@@ -6,6 +6,8 @@ import matplotlib as plt
 filename = "data_control_1.csv"
 data = pd.read_csv(filename, header = 0)
 
+
+
 ##################### A) ###############################
 cantidad_2021 = data[data.PERIODO.apply(str).str.contains("2021")].size
 cantidad_2022 = data[data.PERIODO.apply(str).str.contains("2022")].size
@@ -73,17 +75,25 @@ print(f"La cantidad de personas que contrataron el seguro el 2022 y el 2021 son:
 
 # C)
 
-print(inicio_2021)
-print(inicio_2022)
+interseccion = pd.merge(inicio_2021,inicio_2022, how = "outer", on = "RUT", indicator = True)
 
-interseccion = pd.merge(inicio_2022,inicio_2021, how = "inner", on = "RUT")["RUT"]
+Solo2022 = interseccion.loc[interseccion["_merge"]== "right_only"]
 
-inicio_2022_rut = inicio_2022["RUT"]
+P2_C = Solo2022["RUT"].size
 
-print(interseccion)
+print(f"{P2_C} generaron una poliza en 2022 sin generar una poliza en 2021")
 
-#P2_C = pd.merge(inicio_2022_rut, interseccion, how = "inner",on= "RUT")
-#print(P2_C)
+# D)
+
+Solo2021 = interseccion.loc[interseccion["_merge"]== "left_only"]
+
+P2_D = Solo2021["RUT"].size
+
+print(f"{P2_D} generaron una poliza en 2021 sin generar una poliza en 2022")
+
+
+
+
 
 
 
